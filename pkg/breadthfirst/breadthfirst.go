@@ -4,55 +4,26 @@
  */
 package breadthfirst
 
-type State int
-
-const (
-	Unvisited State = iota
-	Visited
-	Visiting
+import (
+	. "github.com/Spazzy757/cracking-the-coding-in-go/pkg/graph"
 )
 
-type Node struct {
-	id       string
-	State    string
-	Adjacent []Node
-}
-
-type Queue struct {
-	List[Node]
-}
-
-func (q *Queue) IsEmpty() {
-	return len(q.List) == 0
-}
-
-func (q *Queue) Append(n Node) {
-	q.List = append(q.List, n)
-}
-
-func (q *Queue) Pop() Node {
-	if q.IsEmpty() {
-		panic("cant pop an empty list")
-	}
-
-	u := q.List[0]
-	q.List = q.List[1:]
-
-	return u
-}
-
-func Search(start Node, end Node) Bool {
+func Search(start *Node, end *Node) bool {
+	// edge case where start node and end node
+	// is the same node
 	if start == end {
 		return true
 	}
 
+	start.State = Visited
+
 	// used as a queue
 	var q Queue
 
-	start.State
-	q = q.Append(start)
+	// add starting node to the queue
+	q.Push(start)
 
-	var u Node
+	var u *Node
 
 	for {
 		u = q.Pop()
@@ -61,8 +32,8 @@ func Search(start Node, end Node) Bool {
 				if v == end {
 					return true
 				} else {
-					v.State = Visting
-					q.Append(v)
+					v.State = Visiting
+					q.Push(v)
 				}
 			}
 		}
